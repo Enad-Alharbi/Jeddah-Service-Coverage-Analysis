@@ -1,0 +1,50 @@
+<main class="stage">
+  <app-map-view />
+
+  <div class="top">
+    <app-command-bar />
+    <app-kpi-strip />
+    @if (whatIf.mode()) {
+      <p class="mode-banner" role="status">
+        <span class="mode-banner__dot" aria-hidden="true"></span>
+        وضع الاقتراح: اضغط داخل حي لتجربة موقع جديد · <kbd>Esc</kbd> للخروج
+      </p>
+    }
+  </div>
+
+  @if (whatIf.mode()) {
+    <app-what-if-card class="what-if" />
+  }
+
+  @if (store.loadState() === 'ready') {
+    <app-legend-chips class="legend" />
+  }
+
+  @if (analysis.selectedCode()) {
+    <app-district-card (closed)="closeCard()" />
+  }
+
+  <app-ranking-drawer class="drawer" (rowSelected)="selectFromTable($event)" (heightChange)="store.drawerHeight.set($event)" />
+
+  @if (store.loadState() === 'loading') {
+    <div class="loading" role="status">
+      <div class="skeleton"></div>
+      <div class="skeleton skeleton--short"></div>
+      <span class="visually-hidden">جارٍ تحميل الأحياء والمرافق…</span>
+    </div>
+  }
+
+  @if (store.loadState() === 'error') {
+    <div class="toast" role="alert">
+      <span>{{ store.errorMessage() }}</span>
+      <button type="button" class="toast__action" (click)="retryLoad()">إعادة المحاولة</button>
+    </div>
+  } @else if (analysis.status() === 'error') {
+    <div class="toast" role="alert">
+      <span>{{ analysis.error() }}</span>
+      <button type="button" class="toast__action" (click)="analysis.analyze()">إعادة المحاولة</button>
+    </div>
+  } @else if (analysis.status() === 'loading' && !analysis.result()) {
+    <div class="toast toast--info" role="status">أول تحليل لهذه الإعدادات قد يستغرق بضع ثوانٍ (يُحسب في Oracle ثم يُخزَّن)…</div>
+  }
+</main>

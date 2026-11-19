@@ -1,0 +1,90 @@
+// Design tokens: the ONLY place colors, fonts, spacing and motion values live.
+// Components read these via CSS custom properties (var(--…)) or the SCSS maps below.
+
+// ---- Raw palette ----
+$color-bg: #0b1020;
+$color-surface-1: #141a2e;
+$color-surface-2: #1c2440;
+$color-border: rgba(255, 255, 255, 0.08);
+$color-text: #e8ecf8;
+$color-text-muted: #9aa4c2;
+
+$color-accent: #7c5cff; // electric indigo / violet
+$color-accent-strong: #9a80ff;
+$color-highlight: #ffb547; // amber (what-if, highlights)
+
+// Coverage classes (colorblind-friendly, no red/green pair).
+// The same values are reused by the map renderer, legend, table badges and charts.
+$coverage-low: #ff6b6b; // < 50%
+$coverage-mid: #ffc857; // 50–80%
+$coverage-high: #4cc9f0; // >= 80%
+
+// Facility types
+$facility-school: #a78bfa; // violet
+$facility-health: #f472b6; // rose / pink
+$facility-park: #a3e635; // lime
+
+$color-danger: #ff6b6b;
+$color-success: #4cc9f0;
+
+// ---- Typography ----
+$font-heading: 'Readex Pro', system-ui, sans-serif;
+$font-body: 'Cairo', system-ui, sans-serif;
+
+// ---- Spacing / radius / motion ----
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 24px;
+$space-6: 32px;
+
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 18px;
+$radius-pill: 999px;
+
+$duration-fast: 150ms;
+$duration-base: 220ms;
+$easing: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+$glass-blur: 14px;
+
+// Expose everything as CSS custom properties so templates/TS can use them too.
+:root {
+  --color-bg: #{$color-bg};
+  --color-surface-1: #{$color-surface-1};
+  --color-surface-2: #{$color-surface-2};
+  --color-border: #{$color-border};
+  --color-text: #{$color-text};
+  --color-text-muted: #{$color-text-muted};
+  --color-accent: #{$color-accent};
+  --color-accent-strong: #{$color-accent-strong};
+  --color-highlight: #{$color-highlight};
+  --color-danger: #{$color-danger};
+
+  --coverage-low: #{$coverage-low};
+  --coverage-mid: #{$coverage-mid};
+  --coverage-high: #{$coverage-high};
+
+  --facility-school: #{$facility-school};
+  --facility-health: #{$facility-health};
+  --facility-park: #{$facility-park};
+
+  --glass-bg: #{rgba($color-surface-1, 0.72)};
+  --glass-border: #{$color-border};
+  --focus-ring: 0 0 0 3px #{rgba($color-accent, 0.55)};
+  --glow-accent: inset 0 0 12px #{rgba($color-accent, 0.35)};
+
+  --font-heading: #{$font-heading};
+  --font-body: #{$font-body};
+
+  --radius-sm: #{$radius-sm};
+  --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
+  --radius-pill: #{$radius-pill};
+
+  --duration-fast: #{$duration-fast};
+  --duration-base: #{$duration-base};
+  --easing: #{$easing};
+}

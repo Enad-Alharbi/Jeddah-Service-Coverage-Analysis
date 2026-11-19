@@ -1,0 +1,23 @@
+{
+  "name": "jeddah-coverage-data",
+  "private": true,
+  "type": "module",
+  "description": "Fetch and process Jeddah districts and facilities from OpenStreetMap (Overpass API)",
+  "scripts": {
+    "inspect": "node find-city.mjs && node inspect-tagging.mjs && node inspect-facility-tags.mjs",
+    "fetch:districts": "node fetch-districts.mjs",
+    "process:districts": "node process-districts.mjs",
+    "fetch:facilities": "node fetch-facilities.mjs",
+    "process:facilities": "node process-facilities.mjs",
+    "checks": "node report-checks.mjs",
+    "all": "npm run fetch:districts && npm run process:districts && npm run fetch:facilities && npm run process:facilities && npm run checks"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@turf/turf": "^7.4.0",
+    "mapshaper": "^0.7.101",
+    "osmtogeojson": "^3.0.0-beta.5"
+  }
+}

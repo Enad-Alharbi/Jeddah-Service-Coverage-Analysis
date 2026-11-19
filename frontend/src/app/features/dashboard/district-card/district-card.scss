@@ -1,0 +1,137 @@
+@use 'mixins' as m;
+
+:host {
+  position: absolute;
+  inline-size: 300px;
+  z-index: 15;
+  animation: card-in var(--duration-base) var(--easing);
+  @include m.transition(left, top);
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}
+
+.card {
+  @include m.glass(var(--radius-lg));
+  padding: 12px 14px 14px;
+  display: grid;
+  gap: 10px;
+
+  &__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  &__title {
+    font-size: 1.05rem;
+  }
+
+  &__sub {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    text-align: start;
+  }
+
+  &__close {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-2);
+    border-radius: var(--radius-sm);
+    inline-size: 28px;
+    block-size: 28px;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    @include m.focus-ring;
+  }
+
+  &__msg {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+}
+
+.gauges {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.gauge {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 6px 0;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+
+  &--active {
+    border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+    box-shadow: var(--glow-accent);
+  }
+
+  &__count {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    @include m.numeric;
+  }
+}
+
+.gauge-skeleton {
+  justify-self: center;
+  inline-size: 64px;
+  block-size: 64px;
+  border-radius: 50%;
+  background: var(--color-surface-2);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.facts {
+  margin: 0;
+  display: grid;
+  gap: 4px;
+  font-size: 0.82rem;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  dt {
+    color: var(--color-text-muted);
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 600;
+    @include m.numeric;
+  }
+
+  &__warn {
+    color: var(--coverage-low);
+  }
+}
+
+@include m.small-screen {
+  :host {
+    // On phones the card docks above the drawer instead of floating beside the district.
+    left: 8px !important;
+    right: 8px;
+    top: auto !important;
+    inset-block-end: calc(var(--drawer-h, 48px) + 12px);
+    inline-size: auto;
+  }
+}

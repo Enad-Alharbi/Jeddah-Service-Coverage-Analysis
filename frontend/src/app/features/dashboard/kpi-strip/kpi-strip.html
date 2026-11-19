@@ -1,0 +1,25 @@
+<section class="strip" aria-label="مؤشرات المدينة" [attr.aria-busy]="analysis.status() === 'loading'">
+  @if (summary(); as s) {
+    <article class="kpi">
+      <h2 class="kpi__label">تغطية المدينة <span class="kpi__ctx">{{ serviceLabel() }}</span></h2>
+      <p class="kpi__value" [style.color]="cityColor()"><bdi><span [appCountUp]="s.cityCoveragePct" [decimals]="1"></span>%</bdi></p>
+    </article>
+    <article class="kpi">
+      <h2 class="kpi__label">أحياء أقل من 50%</h2>
+      <p class="kpi__value"><bdi><span [appCountUp]="s.underServedDistricts"></span> / {{ s.residentialDistricts }}</bdi></p>
+    </article>
+    <article class="kpi">
+      <h2 class="kpi__label">مساحة غير مغطاة</h2>
+      <p class="kpi__value"><bdi><span [appCountUp]="s.uncoveredAreaKm2" [decimals]="1"></span> <small>كم²</small></bdi></p>
+    </article>
+    <article class="kpi">
+      <h2 class="kpi__label">عدد المرافق</h2>
+      <p class="kpi__value"><bdi><span [appCountUp]="s.facilityCount"></span></bdi></p>
+    </article>
+  }
+  @if (analysis.status() === 'loading' && !summary()) {
+    @for (i of [1, 2, 3, 4]; track i) {
+      <article class="kpi kpi--skeleton" aria-hidden="true"><span></span><span></span></article>
+    }
+  }
+</section>

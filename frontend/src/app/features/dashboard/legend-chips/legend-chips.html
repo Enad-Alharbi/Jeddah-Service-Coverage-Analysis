@@ -1,0 +1,50 @@
+<section class="legend" aria-label="مفتاح الخريطة">
+  @if (priority.active()) {
+    <h2 class="legend__title">الأولويات</h2>
+    <div class="legend__row">
+      <span class="swatch swatch--priority" aria-hidden="true"></span>
+      <span>أقل من 50% في خدمتين أو أكثر</span>
+    </div>
+  } @else if (analysis.result()) {
+    <h2 class="legend__title">نسبة تغطية الحي</h2>
+    <ul class="legend__list">
+      @for (c of classes; track c.key) {
+        <li class="chip chip--static">
+          <span class="swatch swatch--fill" [style.--swatch]="'var(' + c.token + ')'"></span>
+          <bdi>{{ c.label }}</bdi>
+        </li>
+      }
+    </ul>
+    <ul class="legend__list">
+      <li class="chip chip--static"><span class="swatch swatch--covered"></span>مغطى</li>
+      <li class="chip chip--static"><span class="swatch swatch--uncovered"></span>غير مغطى</li>
+    </ul>
+  }
+
+  <h2 class="legend__title">المرافق</h2>
+  <ul class="legend__list">
+    @for (s of services; track s) {
+      <li>
+        <button
+          type="button"
+          class="chip"
+          [class.chip--off]="!isOn(s)"
+          [attr.aria-pressed]="isOn(s)"
+          [attr.aria-label]="(isOn(s) ? 'إخفاء ' : 'إظهار ') + labels[s]"
+          (click)="store.toggleService(s)"
+        >
+          <span class="swatch" [attr.data-shape]="style[s].shape" [style.--swatch]="'var(' + style[s].token + ')'"></span>
+          <span>{{ labels[s] }}</span>
+          <span class="chip__count">{{ store.facilityCounts()[s] }}</span>
+        </button>
+      </li>
+    }
+  </ul>
+  @if (!analysis.result()) {
+    <div class="legend__row">
+      <span class="swatch swatch--district" aria-hidden="true"></span>
+      <span>حدود الأحياء ({{ store.districtCount() }})</span>
+    </div>
+  }
+  <p class="legend__source">البيانات: <span dir="ltr">© OpenStreetMap contributors</span> (ODbL)</p>
+</section>

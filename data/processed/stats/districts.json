@@ -1,0 +1,142 @@
+{
+  "osmSnapshot": "2026-11-15T10:20:51Z",
+  "fetchDate": "2026-11-15",
+  "candidates": 156,
+  "kept": 147,
+  "nonResidential": [
+    "مطار الملك عبد العزيز",
+    "الجامعة",
+    "جامعة الملك عبدالعزيز",
+    "ميناء جدة الاسلامي"
+  ],
+  "missingNameAr": 0,
+  "missingNameEn": 0,
+  "excluded": [
+    {
+      "OSM_ID": 19268636,
+      "NAME_AR": "الشراع",
+      "shareInside": 100,
+      "areaKm2": 6.263,
+      "reason": "duplicate relation (same member ways)"
+    },
+    {
+      "OSM_ID": 19268639,
+      "NAME_AR": "الصفوة",
+      "shareInside": 44.2,
+      "areaKm2": 25.241,
+      "reason": "only 44.2% inside the governorate"
+    },
+    {
+      "OSM_ID": 20039258,
+      "NAME_AR": "العسيلة",
+      "shareInside": 18.2,
+      "areaKm2": 12.939,
+      "reason": "only 18.2% inside the governorate"
+    },
+    {
+      "OSM_ID": 20039318,
+      "NAME_AR": "الرواسي",
+      "shareInside": 4.8,
+      "areaKm2": 9.553,
+      "reason": "only 4.8% inside the governorate"
+    },
+    {
+      "OSM_ID": 20039337,
+      "NAME_AR": "الحجاز",
+      "shareInside": 20.5,
+      "areaKm2": 23.619,
+      "reason": "only 20.5% inside the governorate"
+    },
+    {
+      "OSM_ID": 20039340,
+      "NAME_AR": "الأثير",
+      "shareInside": 42.6,
+      "areaKm2": 14.122,
+      "reason": "only 42.6% inside the governorate"
+    },
+    {
+      "OSM_ID": 20039341,
+      "NAME_AR": "المرسلات",
+      "shareInside": 19.5,
+      "areaKm2": 14.241,
+      "reason": "only 19.5% inside the governorate"
+    },
+    {
+      "OSM_ID": 20039342,
+      "NAME_AR": "أبو جعالة",
+      "shareInside": 48.5,
+      "areaKm2": 16.86,
+      "reason": "only 48.5% inside the governorate"
+    },
+    {
+      "OSM_ID": 20039344,
+      "NAME_AR": "المستقبل",
+      "shareInside": 5.9,
+      "areaKm2": 20.344,
+      "reason": "only 5.9% inside the governorate"
+    }
+  ],
+  "partiallyOutsideKept": [
+    {
+      "name": "الحمدانية",
+      "shareInside": 97.3
+    },
+    {
+      "name": "بريمان",
+      "shareInside": 86.2
+    },
+    {
+      "name": "المحاميد",
+      "shareInside": 82.9
+    },
+    {
+      "name": "الكرامة",
+      "shareInside": 82
+    },
+    {
+      "name": "التضامن",
+      "shareInside": 78.2
+    },
+    {
+      "name": "الشفاء",
+      "shareInside": 51.7
+    },
+    {
+      "name": "أم حبلين الغربية",
+      "shareInside": 68.4
+    },
+    {
+      "name": "الصالحية",
+      "shareInside": 97.8
+    },
+    {
+      "name": "التلال",
+      "shareInside": 97
+    },
+    {
+      "name": "المروج",
+      "shareInside": 98.2
+    }
+  ],
+  "simplification": {
+    "intervalM": 5,
+    "vertsBefore": 17699,
+    "vertsAfter": 8749,
+    "maxAreaChangePct": 0.239
+  },
+  "validation": {
+    "invalidCount": 0,
+    "problems": [],
+    "overlapsAfterSimplify": []
+  },
+  "areaKm2": {
+    "sum": 1781.1,
+    "union": 1781.1
+  },
+  "extent": [
+    38.94686,
+    21.05161,
+    39.42693,
+    21.99678
+  ]
+}

@@ -1,0 +1,160 @@
+@use 'mixins' as m;
+
+:host {
+  display: block;
+  inline-size: 320px;
+  animation: card-in var(--duration-base) var(--easing);
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    translate: 0 -6px;
+  }
+}
+
+.card {
+  @include m.glass(var(--radius-lg));
+  border-color: color-mix(in srgb, var(--color-highlight) 45%, transparent);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35),
+    inset 0 0 18px color-mix(in srgb, var(--color-highlight) 12%, transparent);
+  padding: 12px 16px 14px;
+  display: grid;
+  gap: 6px;
+
+  &__title {
+    font-size: 0.95rem;
+    color: var(--color-highlight);
+  }
+
+  &__district {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+
+    strong {
+      color: var(--color-text);
+    }
+  }
+}
+
+.change {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  @include m.numeric;
+
+  &__pct {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+
+    &--after {
+      color: var(--color-text);
+      font-weight: 600;
+    }
+  }
+
+  &__arrow {
+    color: var(--color-highlight);
+  }
+}
+
+.delta {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  line-height: 1.1;
+  font-weight: 700;
+  color: var(--color-highlight);
+  @include m.numeric;
+  text-shadow: 0 0 24px color-mix(in srgb, var(--color-highlight) 40%, transparent);
+}
+
+.gain,
+.sentence,
+.best,
+.hint {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.gain strong {
+  color: var(--color-text);
+}
+
+.sentence {
+  color: var(--color-text);
+}
+
+.best {
+  border-block-start: 1px solid var(--color-border);
+  padding-block-start: 6px;
+}
+
+.note input {
+  inline-size: 100%;
+  margin-block-start: 4px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-1);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.85rem;
+  @include m.focus-ring;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-block-start: 4px;
+}
+
+.btn {
+  border-radius: var(--radius-pill);
+  padding: 7px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  @include m.focus-ring;
+
+  &--save {
+    border: 0;
+    background: var(--color-highlight);
+    color: var(--color-bg);
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: progress;
+    }
+  }
+
+  &--ghost {
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+  }
+}
+
+.saved {
+  display: grid;
+  gap: 2px;
+  font-size: 0.8rem;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--coverage-high) 12%, transparent);
+  color: var(--color-text-muted);
+  @include m.numeric;
+
+  strong {
+    color: var(--coverage-high);
+  }
+}
+
+.error {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--color-danger);
+}

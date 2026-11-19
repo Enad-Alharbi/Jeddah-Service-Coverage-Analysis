@@ -1,0 +1,29 @@
+# ---- OS / editors ----
+.DS_Store
+Thumbs.db
+.vs/
+.idea/
+*.swp
+
+# ---- Node ----
+node_modules/
+npm-debug.log*
+
+# ---- Data: raw Overpass dumps are large and reproducible ----
+data/raw/*
+!data/raw/.gitkeep
+
+# ---- .NET ----
+bin/
+obj/
+*.user
+appsettings.*.local.json
+
+# ---- Angular ----
+frontend/dist/
+frontend/.angular/
+frontend/coverage/
+
+# ---- Secrets (ArcGIS key lives here; the *.example is committed) ----
+frontend/src/environments/app-config.ts
+.env

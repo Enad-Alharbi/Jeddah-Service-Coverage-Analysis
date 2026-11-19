@@ -1,0 +1,55 @@
+@switch (priority.status()) {
+  @case ('loading') {
+    <p class="note">جارٍ حساب الأولويات للخدمات الثلاث…</p>
+  }
+  @case ('error') {
+    <p class="note note--error">تعذّر تحميل الأولويات.</p>
+  }
+  @case ('ready') {
+    @if (priority.result(); as p) {
+      <p class="note">
+        أحياء سكنية تقل تغطيتها عن <bdi>{{ p.threshold }}%</bdi> في خدمتين أو أكثر (مسافة <bdi>{{ p.distanceM }}</bdi> م).
+        منها <strong><bdi>{{ priority.allThree() }}</bdi></strong> في الخدمات الثلاث. تذكير: النقص في بيانات OSM يرفع هذه الأعداد.
+      </p>
+      @if (!p.districts.length) {
+        <p class="note">لا توجد أحياء تحت الحد في خدمتين أو أكثر.</p>
+      } @else {
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">الحي</th>
+              <th scope="col" class="numeric">خدمات تحت الحد</th>
+              @for (s of services; track s) {
+                <th scope="col" class="numeric">{{ labels[s] }}</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (d of p.districts; track d.districtCode; let i = $index) {
+              <tr
+                tabindex="0"
+                [class.selected]="d.districtCode === analysis.selectedCode()"
+                (click)="rowSelected.emit(d.districtCode)"
+                (keydown.enter)="rowSelected.emit(d.districtCode)"
+              >
+                <td class="rank"><bdi>{{ i + 1 }}</bdi></td>
+                <td class="name">{{ d.nameAr }}</td>
+                <td class="numeric">
+                  <span class="count" [class.count--all]="d.underServedCount === 3"><bdi>{{ d.underServedCount }} / 3</bdi></span>
+                </td>
+                @for (s of services; track s) {
+                  <td class="numeric">
+                    <span class="badge" [attr.data-class]="classFor(d.coveragePctByService[s])">
+                      <bdi>{{ d.coveragePctByService[s] | number: '1.0-0' }}%</bdi>
+                    </span>
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    }
+  }
+}

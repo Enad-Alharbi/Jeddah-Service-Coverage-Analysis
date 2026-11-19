@@ -1,0 +1,54 @@
+<article class="card" aria-labelledby="what-if-title" aria-live="polite">
+  <h2 id="what-if-title" class="card__title">ماذا لو؟</h2>
+
+  @if (whatIf.trial(); as t) {
+    <p class="card__district">
+      {{ serviceLabel[t.serviceType] }} جديدة في <strong>{{ t.nameAr }}</strong> · <bdi>{{ t.distanceM }}</bdi> م مشيًا
+    </p>
+
+    <div class="change">
+      <span class="change__pct"><bdi>{{ t.beforePct | number: '1.0-1' }}%</bdi></span>
+      <span class="change__arrow" aria-hidden="true">←</span>
+      <span class="change__pct change__pct--after"><bdi>{{ t.afterPct | number: '1.0-1' }}%</bdi></span>
+    </div>
+    <p class="delta"><bdi>+{{ t.deltaPct | number: '1.0-1' }}%</bdi></p>
+    <p class="gain">مساحة جديدة مغطاة: <bdi><strong>+{{ t.gainKm2 | number: '1.2-2' }}</strong> كم²</bdi></p>
+    <p class="sentence">
+      تغطية حي {{ t.nameAr }} ترتفع من <bdi>{{ t.beforePct | number: '1.0-0' }}%</bdi> إلى
+      <bdi>{{ t.afterPct | number: '1.0-0' }}%</bdi> (<bdi>+{{ t.gainKm2 | number: '1.1-1' }} كم²</bdi>)
+    </p>
+
+    @if (whatIf.best(); as b) {
+      @if (b.lon !== t.lon || b.lat !== t.lat) {
+        <p class="best">أفضل محاولة حتى الآن: {{ b.nameAr }} <bdi>+{{ b.gainKm2 | number: '1.2-2' }} كم²</bdi></p>
+      }
+    }
+
+    @if (whatIf.lastSaved(); as s) {
+      <div class="saved" role="status">
+        <strong>تم الحفظ ✓</strong>
+        <span>
+          تحقق Oracle: <bdi>{{ s.coverageAfter | number: '1.2-2' }}%</bdi> · المتصفح:
+          <bdi>{{ s.clientCoverageAfter | number: '1.2-2' }}%</bdi> · الفرق: <bdi>{{ s.diffPoints | number: '1.2-2' }}</bdi> نقطة
+        </span>
+      </div>
+    } @else {
+      <label class="note">
+        <span class="visually-hidden">ملاحظة على الاقتراح</span>
+        <input type="text" maxlength="500" placeholder="ملاحظة (اختياري)" [value]="note()" (input)="note.set($any($event.target).value)" />
+      </label>
+      <div class="actions">
+        <button type="button" class="btn btn--save" [disabled]="whatIf.saving()" (click)="save()">
+          {{ whatIf.saving() ? 'جارٍ الحفظ والتحقق…' : 'حفظ الاقتراح' }}
+        </button>
+        <button type="button" class="btn btn--ghost" (click)="whatIf.discard()">تجاهل</button>
+      </div>
+    }
+  } @else {
+    <p class="hint">اضغط داخل منطقة غير مغطاة (المخططة بالأحمر) لتجربة موقع جديد. الحساب فوري في المتصفح.</p>
+  }
+
+  @if (whatIf.message(); as m) {
+    <p class="error" role="alert">{{ m }}</p>
+  }
+</article>

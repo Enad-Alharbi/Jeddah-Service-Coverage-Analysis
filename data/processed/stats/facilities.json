@@ -1,0 +1,197 @@
+{
+  "school": {
+    "fetchDate": "2026-11-15",
+    "osmSnapshot": "2026-11-15T10:28:51Z",
+    "rawElements": 224,
+    "features": 224,
+    "excludedOpenWays": [
+      {
+        "id": "way/405638561",
+        "name": "مدارس التعاون الأهلية",
+        "nodes": 2
+      },
+      {
+        "id": "way/405638562",
+        "name": "مدارس التعاون الأهلية",
+        "nodes": 2
+      },
+      {
+        "id": "way/405783000",
+        "name": "8",
+        "nodes": 2
+      },
+      {
+        "id": "way/405783136",
+        "name": "136",
+        "nodes": 2
+      },
+      {
+        "id": "way/409048054",
+        "name": "",
+        "nodes": 2
+      }
+    ],
+    "byGeometry": {
+      "way/Polygon": 172,
+      "node/Point": 47
+    },
+    "pointOnSurfaceDiffersFromCentroid": 0,
+    "duplicatesRemoved": 2,
+    "duplicates": [
+      {
+        "id": "node/4394454696",
+        "name": "College of Excellence (Laureate)",
+        "insideOf": "way/550730763",
+        "containerName": ""
+      },
+      {
+        "id": "node/5101777025",
+        "name": "ثانوية صقلية للبنين",
+        "insideOf": "way/905286962",
+        "containerName": ""
+      }
+    ],
+    "outsideDistrictsWithinReach": 11,
+    "droppedTooFar": 2,
+    "final": 215,
+    "bySubtype": {
+      "school": 215
+    },
+    "withoutAnyName": 110,
+    "withoutNameAr": 135,
+    "withoutNameEn": 169,
+    "byGeomOrigin": {
+      "point_on_surface": 170,
+      "node": 45
+    }
+  },
+  "health": {
+    "fetchDate": "2026-11-15",
+    "osmSnapshot": "2026-11-15T10:29:49Z",
+    "rawElements": 125,
+    "features": 125,
+    "excludedOpenWays": [],
+    "byGeometry": {
+      "relation/MultiPolygon": 1,
+      "relation/Polygon": 1,
+      "way/Polygon": 44,
+      "node/Point": 79
+    },
+    "pointOnSurfaceDiffersFromCentroid": 0,
+    "duplicatesRemoved": 2,
+    "duplicates": [
+      {
+        "id": "node/4345108992",
+        "name": "Al Noor Medical Centre",
+        "insideOf": "way/681689747",
+        "containerName": ""
+      },
+      {
+        "id": "node/13973907101",
+        "name": "مستشفى الملك عبدالعزيز",
+        "insideOf": "way/1079728705",
+        "containerName": "مستشفى الملك عبدالعزيز"
+      }
+    ],
+    "outsideDistrictsWithinReach": 1,
+    "droppedTooFar": 1,
+    "final": 122,
+    "bySubtype": {
+      "hospital": 84,
+      "clinic": 36,
+      "doctors": 2
+    },
+    "withoutAnyName": 2,
+    "withoutNameAr": 28,
+    "withoutNameEn": 36,
+    "byGeomOrigin": {
+      "point_on_surface": 45,
+      "node": 77
+    }
+  },
+  "park": {
+    "fetchDate": "2026-11-15",
+    "osmSnapshot": "2026-11-15T10:29:49Z",
+    "rawElements": 381,
+    "features": 381,
+    "excludedOpenWays": [
+      {
+        "id": "way/405783042",
+        "name": "49",
+        "nodes": 2
+      },
+      {
+        "id": "way/405783097",
+        "name": "112",
+        "nodes": 2
+      },
+      {
+        "id": "way/407182581",
+        "name": "",
+        "nodes": 2
+      },
+      {
+        "id": "way/407502888",
+        "name": "",
+        "nodes": 2
+      },
+      {
+        "id": "way/409083987",
+        "name": "",
+        "nodes": 2
+      }
+    ],
+    "byGeometry": {
+      "relation/MultiPolygon": 1,
+      "way/Polygon": 357,
+      "node/Point": 18
+    },
+    "pointOnSurfaceDiffersFromCentroid": 22,
+    "duplicatesRemoved": 5,
+    "duplicates": [
+      {
+        "id": "node/5885488189",
+        "name": "Abdul Rahman Al Mufti Park",
+        "insideOf": "way/431836042",
+        "containerName": "Abdul Rahman Al Mufti Park"
+      },
+      {
+        "id": "node/5885492415",
+        "name": "Alkazemi Park",
+        "insideOf": "way/431836043",
+        "containerName": "Alkazemi Park"
+      },
+      {
+        "id": "node/5937880108",
+        "name": "Attahlia Park",
+        "insideOf": "way/627260103",
+        "containerName": "Attahlia Park"
+      },
+      {
+        "id": "node/7761005190",
+        "name": "",
+        "insideOf": "way/831643299",
+        "containerName": ""
+      },
+      {
+        "id": "node/8043892102",
+        "name": "",
+        "insideOf": "way/831643315",
+        "containerName": ""
+      }
+    ],
+    "outsideDistrictsWithinReach": 0,
+    "droppedTooFar": 7,
+    "final": 364,
+    "bySubtype": {
+      "park": 364
+    },
+    "withoutAnyName": 310,
+    "withoutNameAr": 329,
+    "withoutNameEn": 331,
+    "byGeomOrigin": {
+      "point_on_surface": 351,
+      "node": 13
+    }
+  }
+}

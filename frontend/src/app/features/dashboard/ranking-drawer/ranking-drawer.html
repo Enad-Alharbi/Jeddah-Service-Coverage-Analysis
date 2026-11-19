@@ -1,0 +1,127 @@
+<section class="drawer" [class.drawer--open]="open()" aria-labelledby="ranking-title">
+  <div
+    class="handle"
+    role="separator"
+    aria-orientation="horizontal"
+    aria-label="تغيير ارتفاع الجدول"
+    tabindex="0"
+    (pointerdown)="startResize($event)"
+    (keydown.arrowup)="resizeBy(40); $event.preventDefault()"
+    (keydown.arrowdown)="resizeBy(-40); $event.preventDefault()"
+  ></div>
+
+  <header class="head">
+    <h2 id="ranking-title" class="visually-hidden">جداول التحليل</h2>
+    <div class="tabs" role="tablist" aria-label="جداول التحليل">
+      <button
+        type="button"
+        role="tab"
+        class="tab"
+        id="tab-ranking"
+        aria-controls="ranking-body"
+        [attr.aria-selected]="priority.tab() === 'ranking'"
+        (click)="showTab('ranking')"
+      >
+        {{ title() }}
+      </button>
+      <button
+        type="button"
+        role="tab"
+        class="tab tab--priority"
+        id="tab-priority"
+        aria-controls="ranking-body"
+        [attr.aria-selected]="priority.tab() === 'priority'"
+        (click)="showTab('priority')"
+      >
+        الأولويات
+      </button>
+    </div>
+    @if (priority.tab() === 'ranking' && analysis.ranking().length) {
+      <span class="head__count"><bdi>{{ analysis.ranking().length }}</bdi> حي سكني</span>
+    } @else if (priority.tab() === 'priority' && priority.result(); as p) {
+      <span class="head__count"><bdi>{{ p.districts.length }}</bdi> حي · <bdi>{{ p.distanceM }}</bdi> م</span>
+    }
+    <button
+      type="button"
+      class="head__toggle"
+      [attr.aria-expanded]="open()"
+      aria-controls="ranking-body"
+      [attr.aria-label]="open() ? 'طي الجدول' : 'فتح الجدول'"
+      (click)="open.set(!open())"
+    >
+      <span aria-hidden="true">{{ open() ? '▾' : '▴' }}</span>
+    </button>
+  </header>
+
+  <div id="ranking-body" class="body" role="tabpanel" [attr.aria-labelledby]="'tab-' + priority.tab()" [hidden]="!open()">
+    @if (priority.tab() === 'priority') {
+      <app-priority-list (rowSelected)="rowSelected.emit($event)" />
+    } @else {
+    @switch (analysis.status()) {
+      @case ('idle') {
+        <p class="empty">اختر الخدمة ومسافة المشي ثم اضغط «تحليل التغطية» لعرض ترتيب الأحياء.</p>
+      }
+      @case ('error') {
+        <p class="empty empty--error">{{ analysis.error() }}</p>
+      }
+      @default {
+        @if (analysis.status() === 'loading' && !analysis.ranking().length) {
+          @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+            <div class="skeleton-row" aria-hidden="true"></div>
+          }
+        } @else {
+          <table class="table" [class.table--stale]="analysis.status() === 'loading'">
+            <thead>
+              <tr>
+                <th scope="col" class="rank">#</th>
+                @for (c of columns; track c.key) {
+                  <th scope="col" [attr.aria-sort]="ariaSort(c.key)" [class.numeric]="c.numeric">
+                    <button type="button" class="sort" (click)="analysis.toggleSort(c.key)">
+                      {{ c.label }}
+                      <span class="sort__icon" aria-hidden="true">
+                        @switch (ariaSort(c.key)) {
+                          @case ('ascending') { ▲ }
+                          @case ('descending') { ▼ }
+                          @default { ↕ }
+                        }
+                      </span>
+                    </button>
+                  </th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (d of analysis.ranking(); track d.districtCode; let i = $index) {
+                <tr
+                  [class.selected]="d.districtCode === analysis.selectedCode()"
+                  tabindex="0"
+                  (click)="rowSelected.emit(d.districtCode)"
+                  (keydown.enter)="rowSelected.emit(d.districtCode)"
+                >
+                  <td class="rank"><bdi>{{ i + 1 }}</bdi></td>
+                  <td>
+                    <span class="name">{{ d.nameAr }}</span>
+                    @if (d.nameEn) {
+                      <span class="name-en" dir="ltr">{{ d.nameEn }}</span>
+                    }
+                  </td>
+                  <td class="numeric"><bdi>{{ d.facilityCount }}</bdi></td>
+                  <td class="numeric">
+                    <div class="pct">
+                      <span class="badge" [attr.data-class]="classFor(d.coveragePct)"><bdi>{{ d.coveragePct | number: '1.0-1' }}%</bdi></span>
+                      <span class="bar" aria-hidden="true">
+                        <span class="bar__fill" [style.inline-size.%]="d.coveragePct" [style.background]="colorFor(d.coveragePct)"></span>
+                      </span>
+                    </div>
+                  </td>
+                  <td class="numeric"><bdi>{{ d.uncoveredAreaKm2 | number: '1.2-2' }}</bdi></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
+      }
+    }
+    }
+  </div>
+</section>

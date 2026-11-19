@@ -1,0 +1,24 @@
+@use 'mixins' as m;
+
+:host {
+  position: absolute;
+  inset: 0;
+}
+
+.map {
+  inline-size: 100%;
+  block-size: 100%;
+  // Keep the floating command bar / KPI strip and the bottom drawer from covering the map's own UI.
+  // --drawer-h is set by the dashboard page from the drawer's live height.
+  --arcgis-layout-overlay-space-top: 150px;
+  --arcgis-layout-overlay-space-bottom: calc(var(--drawer-h, 48px) + 8px);
+  --arcgis-layout-overlay-space-left: 8px;
+}
+
+// On phones the legend spans the bottom above the drawer, so the map's own controls move up above both.
+@include m.small-screen {
+  .map {
+    --arcgis-layout-overlay-space-top: 130px;
+    --arcgis-layout-overlay-space-bottom: calc(var(--drawer-h, 48px) + 180px);
+  }
+}

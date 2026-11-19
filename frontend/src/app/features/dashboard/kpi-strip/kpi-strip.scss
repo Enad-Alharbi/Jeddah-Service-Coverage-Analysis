@@ -1,0 +1,89 @@
+@use 'mixins' as m;
+
+.strip {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  &[aria-busy='true'] .kpi__value {
+    opacity: 0.55;
+  }
+}
+
+.kpi {
+  @include m.glass(var(--radius-md));
+  min-inline-size: 150px;
+  padding: 8px 14px;
+  @include m.transition(transform, opacity);
+
+  &__label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  &__ctx {
+    margin-inline-start: 4px;
+    color: var(--color-accent-strong);
+  }
+
+  &__value {
+    margin: 2px 0 0;
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 600;
+    @include m.numeric;
+    @include m.transition(opacity, color);
+
+    small {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+  }
+
+  &--skeleton {
+    display: grid;
+    gap: 8px;
+
+    span {
+      display: block;
+      block-size: 10px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(90deg, var(--color-surface-1), var(--color-surface-2), var(--color-surface-1));
+      background-size: 200% 100%;
+      animation: shimmer 1.2s linear infinite;
+
+      &:last-child {
+        block-size: 18px;
+        inline-size: 60%;
+      }
+    }
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@include m.small-screen {
+  .strip {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .kpi {
+    min-inline-size: 128px;
+    flex: none;
+
+    &__value {
+      font-size: 1.1rem;
+    }
+  }
+}

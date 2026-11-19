@@ -1,0 +1,61 @@
+<header class="bar">
+  <h1 class="brand">مرصد تغطية الخدمات <span class="brand__dot">·</span> جدة</h1>
+
+  <button
+    type="button"
+    class="menu-btn"
+    [attr.aria-expanded]="menuOpen()"
+    aria-controls="analysis-controls"
+    aria-label="إعدادات التحليل"
+    (click)="menuOpen.set(!menuOpen())"
+  >
+    <span aria-hidden="true">☰</span>
+  </button>
+
+  <form id="analysis-controls" class="controls" [class.controls--open]="menuOpen()" [formGroup]="form" (ngSubmit)="run()">
+    <fieldset class="segmented" aria-label="نوع الخدمة">
+      <legend class="visually-hidden">نوع الخدمة</legend>
+      @for (s of services; track s) {
+        <label class="segmented__option">
+          <input type="radio" formControlName="service" [value]="s" />
+          <span>{{ labels[s] }}</span>
+        </label>
+      }
+    </fieldset>
+
+    <fieldset class="segmented" aria-label="مسافة المشي">
+      <legend class="visually-hidden">مسافة المشي بالمتر</legend>
+      @for (d of distances; track d) {
+        <label class="segmented__option">
+          <input type="radio" formControlName="distance" [value]="d" />
+          <span><bdi class="num">{{ d }}</bdi> م</span>
+        </label>
+      }
+    </fieldset>
+
+    <button
+      type="submit"
+      class="analyze"
+      [disabled]="map.loadState() !== 'ready' || analysis.status() === 'loading'"
+      [attr.aria-busy]="analysis.status() === 'loading'"
+    >
+      @if (analysis.status() === 'loading') {
+        <span class="spinner" aria-hidden="true"></span> جارٍ التحليل…
+      } @else {
+        تحليل التغطية
+      }
+    </button>
+
+    <button
+      type="button"
+      class="propose"
+      [class.propose--on]="whatIf.mode()"
+      [disabled]="!analysis.result() || analysis.status() === 'loading'"
+      [attr.aria-pressed]="whatIf.mode()"
+      [title]="analysis.result() ? '' : 'شغّل التحليل أولًا'"
+      (click)="toggleProposal()"
+    >
+      {{ whatIf.mode() ? 'إنهاء الاقتراح' : 'اقتراح موقع جديد' }}
+    </button>
+  </form>
+</header>

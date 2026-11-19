@@ -1,0 +1,180 @@
+@use 'mixins' as m;
+
+.stage {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.top {
+  position: absolute;
+  inset-block-start: 16px;
+  inset-inline: 16px;
+  display: grid;
+  // minmax(0, 1fr): the column never grows to the KPI strip's content width (which scrolls on phones).
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  justify-items: start;
+
+  app-kpi-strip {
+    max-inline-size: 100%;
+  }
+  z-index: 10;
+  pointer-events: none; // the map stays clickable between the floating cards
+
+  > * {
+    pointer-events: auto;
+  }
+
+  app-command-bar {
+    justify-self: stretch;
+  }
+}
+
+// Visible "you are in proposal mode" banner (amber = what-if).
+.mode-banner {
+  @include m.glass(var(--radius-pill));
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  color: var(--color-highlight);
+  border-color: color-mix(in srgb, var(--color-highlight) 50%, transparent);
+
+  &__dot {
+    inline-size: 8px;
+    block-size: 8px;
+    border-radius: 50%;
+    background: var(--color-highlight);
+    box-shadow: 0 0 10px var(--color-highlight);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+
+  kbd {
+    font: inherit;
+    padding: 0 6px;
+    border-radius: 4px;
+    border: 1px solid currentColor;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+// What-if card floats on the inline-end side (left in RTL), clear of the KPI strip and the legend.
+.what-if {
+  position: absolute;
+  inset-block-start: 150px;
+  inset-inline-end: 16px;
+  z-index: 14;
+}
+
+// Legend sits above the drawer on the inline-start side (right in RTL), clear of the zoom controls on the left.
+.legend {
+  position: absolute;
+  inset-block-end: calc(var(--drawer-h, 48px) + 12px);
+  inset-inline-start: 16px;
+  z-index: 5;
+  @include m.transition(inset-block-end);
+}
+
+.drawer {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 16px;
+  z-index: 12;
+}
+
+.loading {
+  position: absolute;
+  inset-block-start: 84px;
+  inset-inline-start: 16px;
+  display: grid;
+  gap: 8px;
+  z-index: 10;
+}
+
+.skeleton {
+  inline-size: 220px;
+  block-size: 14px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--color-surface-1) 0%, var(--color-surface-2) 50%, var(--color-surface-1) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s linear infinite;
+
+  &--short {
+    inline-size: 140px;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.toast {
+  @include m.glass(var(--radius-md));
+  position: absolute;
+  inset-block-end: calc(var(--drawer-h, 48px) + 16px);
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-color: color-mix(in srgb, var(--color-danger) 50%, transparent);
+  z-index: 20;
+  max-inline-size: calc(100vw - 32px);
+
+  &--info {
+    border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+    color: var(--color-text-muted);
+  }
+
+  &__action {
+    border: 0;
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    background: var(--color-accent);
+    color: var(--color-text);
+    cursor: pointer;
+    white-space: nowrap;
+    @include m.focus-ring;
+  }
+}
+
+@include m.small-screen {
+  .top {
+    inset-block-start: 8px;
+    inset-inline: 8px;
+  }
+
+  .legend {
+    inset-inline: 8px;
+  }
+
+  .drawer {
+    inset-inline: 0;
+  }
+
+  .what-if {
+    inset-inline: 8px;
+    inset-block-start: auto;
+    inset-block-end: calc(var(--drawer-h, 48px) + 12px);
+
+    ::ng-deep app-what-if-card,
+    & {
+      inline-size: auto;
+    }
+  }
+}

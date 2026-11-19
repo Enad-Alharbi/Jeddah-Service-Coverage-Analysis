@@ -1,0 +1,51 @@
+<article class="card" aria-labelledby="district-card-title" role="dialog" aria-modal="false">
+  <header class="card__head">
+    <div>
+      <h2 id="district-card-title" class="card__title">{{ analysis.detail()?.nameAr ?? analysis.selectedRow()?.nameAr ?? '…' }}</h2>
+      @if (analysis.detail()?.nameEn; as en) {
+        <p class="card__sub" dir="ltr">{{ en }}</p>
+      }
+    </div>
+    <button type="button" class="card__close" aria-label="إغلاق تفاصيل الحي" (click)="closed.emit()">✕</button>
+  </header>
+
+  @switch (analysis.detailStatus()) {
+    @case ('loading') {
+      <div class="gauges" aria-hidden="true">
+        @for (i of [1, 2, 3]; track i) {
+          <span class="gauge-skeleton"></span>
+        }
+      </div>
+    }
+    @case ('error') {
+      <p class="card__msg">تعذّر تحميل تفاصيل الحي.</p>
+    }
+    @case ('ready') {
+      @if (analysis.detail(); as d) {
+        @if (d.nonResidential) {
+          <p class="card__msg">وحدة غير سكنية (مطار / ميناء / جامعة): لا تدخل في الترتيب ولا في مؤشرات المدينة.</p>
+        }
+        <div class="gauges">
+          @for (s of d.services; track s.serviceType) {
+            <div class="gauge" [class.gauge--active]="s.serviceType === analysis.service()">
+              <app-donut-gauge [value]="s.coveragePct" [label]="labels[s.serviceType]" />
+              <span class="gauge__count"><bdi>{{ s.facilityCount }}</bdi> داخل الحي</span>
+            </div>
+          }
+        </div>
+        <dl class="facts">
+          <div>
+            <dt>مساحة الحي</dt>
+            <dd><bdi>{{ d.areaKm2 | number: '1.2-2' }}</bdi> كم²</dd>
+          </div>
+          @if (current(); as c) {
+            <div>
+              <dt>غير مغطى ({{ labels[c.serviceType] }} · <bdi>{{ d.distanceM }}</bdi> م)</dt>
+              <dd class="facts__warn"><bdi>{{ c.uncoveredAreaKm2 | number: '1.2-2' }}</bdi> كم²</dd>
+            </div>
+          }
+        </dl>
+      }
+    }
+  }
+</article>

@@ -1,0 +1,10 @@
+<arcgis-map
+  class="map"
+  [basemap]="basemap"
+  [center]="center"
+  [zoom]="10"
+  (arcgisViewReadyChange)="onViewReady($event)"
+>
+  <arcgis-zoom slot="bottom-left"></arcgis-zoom>
+  <arcgis-home slot="bottom-left"></arcgis-home>
+</arcgis-map>

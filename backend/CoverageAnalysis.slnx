@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="CoverageAnalysis.Api/CoverageAnalysis.Api.csproj" />
+  <Project Path="CoverageAnalysis.DataLoader/CoverageAnalysis.DataLoader.csproj" />
+  <Project Path="CoverageAnalysis.Tests/CoverageAnalysis.Tests.csproj" />
+</Solution>
